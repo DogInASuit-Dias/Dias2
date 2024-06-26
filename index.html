@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dog In A Suit</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="dias.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="nav">
+        <div class="logo">
+          <a href="#">Dog In A Suit</a>
+          <div class="logo-revealer"></div>
+        </div>
+      </div>
+      <div class="header">
+        <div class="letter">
+          <img src="./letters/X.png" alt="" />
+        </div>
+        <div class="letter">
+          <img src="./letters/D.png" alt="" />
+        </div>
+        <div class="letter">
+          <img src="./letters/I.png" alt="" />
+        </div>
+        <div class="letter">
+          <img src="./letters/A.png" alt="" />
+        </div>
+        <div class="letter">
+          <img src="./letters/S.png" alt="" />
+        </div>
+      </div>
+      <div class="website-content">
+        <div class="website-content-wrapper">
+          <h1>
+            The Smartest Dog on Solana. <br />
+          </h1>
+          <div class="img">
+            <img src="./hero.jpg" alt="" />
+          </div>
+          <p>
+            In year twenty sixty-nine, a smart Chihuahua named "DIAS" was born in the Solana world. DIAS, wearing a cool suit, is set to become the most charming character in Solana, along with its buddies Bonk and WIF. 
+            What started as a fun meme quickly captured everyone's hearts because of DIAS's undeniable cuteness.
+
+          <br />
+          <p>
+            As DIAS's popularity grows, it becomes clear this is more than just a meme. DIAS starts to offer real benefits, making it valuable in the Solana community. The love between DIAS and its supporters is shown in every part of the project, with new features being added all the time.
+<br><br>
+With its adorable looks and strong community support, DIAS is on its way to an amazing goal: a $ONE billion market cap. From a simple meme to a big player in the crypto world, DIAS shows the power of community and creativity in Solana. Join us in supporting DIAS as it spreads joy and makes a big impact.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Social Media Links -->
+    <div class="social-media">
+      <a href="https://x.com/doginasuit_sol" target="_blank">Twitter</a>
+      <a href="https://telegram.org" target="_blank">Telegram</a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+      const header = document.querySelector(".header");
+      const letters = document.querySelectorAll(".letter");
+      const logo = document.querySelector(".logo a");
+      const websiteContent = document.querySelector(".website-content");
+
+      let lastScroll = 0;
+
+      const sectionHeight = 150;
+
+      window.addEventListener("scroll", () => {
+        const scrollY = window.scrollY;
+
+        if (scrollY < 900) {
+          websiteContent.style.position = "fixed";
+          websiteContent.style.top = "0px";
+        } else {
+          websiteContent.style.position = "absolute";
+          websiteContent.style.top = "900px";
+        }
+        const orderPairs = [
+          [4, 5],
+          [3, 6],
+          [2, 7],
+          [1, 8],
+          [0, 9],
+        ];
+
+        orderPairs.forEach((pair, orderIndex) => {
+          const startScroll = sectionHeight * orderIndex;
+
+          if (scrollY >= startScroll) {
+            const moveFactor = Math.min(
+              1,
+              (scrollY - startScroll) / sectionHeight
+            );
+            const translateY = -moveFactor * header.offsetHeight;
+
+            pair.forEach((idx) => {
+              const letter = letters[idx];
+              gsap.to(letter, {
+                y: translateY,
+                zIndex: 1 - moveFactor,
+              });
+            });
+          } else {
+            pair.forEach((idx) => {
+              const letter = letters[idx];
+              gsap.to(letter, {
+                y: 0,
+                zIndex: 1,
+              });
+            });
+          }
+        });
+
+        // Buffer to introduce delay after letters' animation before logo starts moving
+        const buffer = 50;
+
+        // Adjust logo position based on scroll position
+        if (
+          scrollY >= orderPairs.length * sectionHeight + buffer &&
+          !gsap.isTweening(logo)
+        ) {
+          gsap.to(logo, {
+            top: "0px",
+            ease: "power1.out",
+            overwrite: true,
+          });
+          gsap.to(".logo-revealer", {
+            scaleY: 0,
+            overwrite: true,
+          });
+        } else if (
+          scrollY <= (orderPairs.length - 1) * sectionHeight &&
+          !gsap.isTweening(logo)
+        ) {
+          gsap.to(logo, {
+            top: "20px",
+            ease: "power1.out",
+            overwrite: true,
+          });
+
+          gsap.to(".logo-revealer", {
+            scaleY: 1,
+            overwrite: true,
+          });
+        }
+
+        lastScroll = scrollY;
+      });
+    </script>
+    <style>
+      .social-media {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+      }
+      .social-media a {
+        display: inline-block;
+        margin-right: 10px;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 18px;
+      }
+      .social-media a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </body>
+</html>
